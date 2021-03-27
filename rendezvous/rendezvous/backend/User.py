@@ -7,10 +7,15 @@ Their name, their
 
 
 class User:
-    def __init__(self):
-        self.__first_name = ""
-        self.__last_name = ""
-        self.__username = ""
+    __next_id: int = 0
+
+    def __init__(self, first_name: str = "", last_name: str = "", username: str = ""):
+        self.__user_id = User.__next_id
+        User.__next_id += 1
+
+        self.__first_name = first_name
+        self.__last_name = last_name
+        self.__username = username
 
     def get_first_name(self):
         """
