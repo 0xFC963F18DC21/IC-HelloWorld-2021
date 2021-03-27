@@ -6,12 +6,11 @@ Their name, their username, etc.
 """
 
 import time
+import uuid
 from pwd import pwd_hash
 
 
 class User:
-    __next_id: int = 0
-
     def __init__(self, first_name: str = "", last_name: str = "", username: str = "", password: str = "", spotify_access_token: str = ""):
         """
         Create a new user
@@ -21,16 +20,15 @@ class User:
         :param password: User's initial password, DO NOT STORE AS PLAINTEXT
         :param spotify_access_token: User's spotify access token
         """
-        self.__user_id = User.__next_id
-        User.__next_id += 1
+        self.__user_uuid = str(uuid.uuid4())
+        self.__toc = str(time.time())
 
         self.__first_name = first_name
         self.__last_name = last_name
         self.__username = username
         self.__spotify_access_token = spotify_access_token
 
-        self.__time_of_creation = str(time.time())
-        self.__password = pwd_hash(password + self.__time_of_creation)
+        self.__password = pwd_hash(self.__toc + password + self.__user_uuid)
 
     def try_login(self, password: str = "") -> bool:
         """
@@ -38,7 +36,14 @@ class User:
         :param password: Given password
         :return: True if successful, False otherwise
         """
-        return pwd_hash(password + self.__time_of_creation) == self.__password
+        return pwd_hash(self.__toc + password + self.__user_uuid) == self.__password
+
+    def get_user_uuid(self) -> str:
+        """
+        Gets the current user's unique id
+        :return: User's unique id
+        """
+        return self.__user_uuid
 
     def get_first_name(self) -> str:
         """
