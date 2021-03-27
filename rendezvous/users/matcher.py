@@ -39,3 +39,16 @@ def match_score(user_json1, user_json2) -> int:
 
     return reduce(lambda s, gnr: s + genre_frequencies[gnr], genre_intersect, 0)\
         + reduce(lambda s, art: s + get_artist_score(art), artist_intersect, 0)
+
+
+def find_best_match(user, user_collection):
+    max_score = -1
+    max_user = None
+
+    for u in user_collection:
+        if u != user:
+            if (sc := match_score(user, u)) > max_score:
+                max_score = sc
+                max_user = u
+
+    return max_user
