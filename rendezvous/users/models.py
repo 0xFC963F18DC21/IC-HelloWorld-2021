@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.template.defaultfilters import slugify
 
 
 class AppUser(models.Model):
@@ -13,6 +14,7 @@ class User(models.Model):
     first_name = models.TextField()
     last_name = models.TextField()
     username = models.TextField()
+    slug = models.SlugField(unique=True, max_length=255)
 
     spotify_auth_token = models.TextField(blank=True, null=True)
     spotify_refresh_token = models.TextField()
@@ -22,6 +24,11 @@ class User(models.Model):
     password_hash = models.TextField()  # Don't forget to add salt
 
     friends = models.ManyToManyField("User", blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(User, self).save(*args, **kwargs)
 
 
 class FriendRequest(models.Model):
