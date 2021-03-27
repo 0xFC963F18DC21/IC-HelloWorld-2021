@@ -36,3 +36,6 @@ class User:
         Gets the username of the user
         :return: User's username
         """
+
+    def set_first_name(self, first_name: str = ""):
+        self.__first_name = first_name
