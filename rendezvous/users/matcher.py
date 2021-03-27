@@ -13,9 +13,9 @@ def match_score(user_json1, user_json2) -> int:
     for artist in user1_artists:
         for genre in artist["genres"]:
             if genre in genre_frequencies:
-                genre_frequencies[genre] = 1
-            else:
                 genre_frequencies[genre] += 1
+            else:
+                genre_frequencies[genre] = 1
 
             user1_genres.add(genre)
 
@@ -23,19 +23,22 @@ def match_score(user_json1, user_json2) -> int:
     for artist in user2_artists:
         for genre in artist["genres"]:
             if genre in genre_frequencies:
-                genre_frequencies[genre] = 1
-            else:
                 genre_frequencies[genre] += 1
+            else:
+                genre_frequencies[genre] = 1
 
             user2_genres.add(genre)
 
     # Pre: artist is present in both users' listening lists
+    user1_artist_names = list(map(lambda a: a["name"], user1_artists))
+    user2_artist_names = list(map(lambda a: a["name"], user2_artists))
+
     def get_artist_score(artst):
-        return (len(user1_artists) - user1_artists.index(artst))\
-            + (len(user2_artists) - user2_artists.index(artst))
+        return (len(user1_artist_names) - user1_artist_names.index(artst))\
+            + (len(user2_artist_names) - user2_artist_names.index(artst))
 
     genre_intersect = user1_genres.intersection(user2_genres)
-    artist_intersect = set(user1_artists).intersection(set(user2_artists))
+    artist_intersect = set(user1_artist_names).intersection(set(user2_artist_names))
 
     return reduce(lambda s, gnr: s + genre_frequencies[gnr], genre_intersect, 0)\
         + reduce(lambda s, art: s + get_artist_score(art), artist_intersect, 0)
