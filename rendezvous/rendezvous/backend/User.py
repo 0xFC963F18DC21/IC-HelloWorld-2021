@@ -12,9 +12,9 @@ from pwd import pwd_hash
 
 class User:
     def __init__(
-        self, first_name: str = "",last_name: str = "", username: str = "",
-        password: str = "", permanent_spotify_refresh_token: str = "",
-        shortlived_spotify_refresh_token: str = ""
+        self, first_name: str = "", last_name: str = "", username: str = "",
+        password: str = "", spotify_refresh_code: str = "",
+        spotify_access_code: str = ""
     ):
         """
         Create a new user
@@ -22,7 +22,8 @@ class User:
         :param last_name: User's last name
         :param username: User's username
         :param password: User's initial password, DO NOT STORE AS PLAINTEXT
-        :param permanent_spotify_refresh_token: User's spotify access token
+        :param spotify_refresh_code: User's spotify refresh code
+        :param spotify_access_code: User's temporary access code
         """
         self.__user_uuid = str(uuid.uuid4())
         self.__toc = str(time.time())
@@ -30,8 +31,8 @@ class User:
         self.__first_name = first_name
         self.__last_name = last_name
         self.__username = username
-        self.__permanent_spotify_refresh_token = permanent_spotify_refresh_token
-        self.__shortlived_spotify_refresh_token = shortlived_spotify_refresh_token
+        self.__spotify_refresh_code = spotify_refresh_code
+        self.__spotify_access_code = spotify_access_code
 
         self.__password = pwd_hash(self.__toc + password + self.__user_uuid)
 
@@ -70,25 +71,25 @@ class User:
         :return: User's username
         """
 
-    def get_permanent_spotify_refresh_token(self) -> str:
+    def get_spotify_refresh_code(self) -> str:
         """
-        Gets the user's permanent spotify refresh token.
+        Gets the user's permanent spotify refresh code.
         BE CAREFUL WITH WHAT USES THIS API.
-        :return: User's permanent spotify refresh token
+        :return: User's permanent spotify refresh code
         """
-        return self.__permanent_spotify_refresh_token
+        return self.__spotify_refresh_code
 
-    def get_shortlived_spotify_refresh_token(self) -> str:
+    def get_spotify_access_code(self) -> str:
         """
-        Gets the user's short-lived spotify refresh token.
+        Gets the user's short-lived spotify access code.
         BE CAREFUL WITH WHAT USES THIS API.
-        :return: User's short-lived spotify refresh token
+        :return: User's short-lived spotify access code
         """
-        return self.__shortlived_spotify_refresh_token
+        return self.__spotify_access_code
 
-    def set_shortlived_spotify_refresh_token(self, shortlived_spotify_refresh_token: str = ""):
+    def set_spotify_access_code(self, spotify_access_code: str = ""):
         """
-        Gets this user's short-lived spotify refresh token.
-        :param shortlived_spotify_refresh_token:
+        Gets this user's short-lived spotify access token.
+        :param spotify_access_code:
         """
-        self.__shortlived_spotify_refresh_token = shortlived_spotify_refresh_token
+        self.__spotify_access_code = spotify_access_code
