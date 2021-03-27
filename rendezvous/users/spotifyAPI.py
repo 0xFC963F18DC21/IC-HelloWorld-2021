@@ -3,6 +3,7 @@ import requests
 client_id = '91e3a670387a494bb34172896b2a2f93'
 client_secret = 'a6c546fdaf4646afaeeba882c70999a7'
 
+
 # https://accounts.spotify.com/authorize?client_id=91e3a670387a494bb34172896b2a2f93&response_type=code&redirect_uri=http://mysite.com/callback/&scope=user-read-recently-played user-read-playback-state user-top-read user-read-currently-playing user-follow-read user-read-playback-position'
 
 def get_auth_data(code):
