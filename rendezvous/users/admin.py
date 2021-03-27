@@ -1,4 +1,8 @@
 from django.contrib import admin
 from .models import AppUser
-# Register your models here.
+from .models import User, FriendRequest
+
+
 admin.site.register(AppUser)
+admin.site.register(User)
+admin.site.register(FriendRequest)
