@@ -19,6 +19,7 @@ class User(models.Model):
     spotify_access_token = models.TextField(blank=True, null=True)
 
     time_of_creation = models.DateTimeField()
+    password_hash = models.TextField()  # Don't forget to add salt
 
     friends = models.ManyToManyField("User", blank=True)
 
