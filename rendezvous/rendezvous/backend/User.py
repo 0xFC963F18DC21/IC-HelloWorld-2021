@@ -34,7 +34,7 @@ class User:
         self.__username = username
         self.__spotify_refresh_code = spotify_refresh_code
         self.__spotify_access_code = spotify_access_code
-        self.__last_access_fetch = self.__toc
+        self.__last_access_fetch = float(self.__toc)
 
         self.__password = pwd_hash(self.__toc + password + self.__user_uuid)
 
