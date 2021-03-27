@@ -3,7 +3,7 @@ from django.contrib.auth import update_session_auth_hash, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from ..accounts.forms import RegisterForm, EditForm
+from .forms import RegisterForm, EditForm
 from django.contrib.auth.models import User
 
 
