@@ -51,24 +51,3 @@ class User:
         :return: User's spotify access token
         """
         return self.__spotify_access_token
-
-    def set_first_name(self, first_name: str = ""):
-        """
-        Set a new first name for this user
-        :param first_name: New first name for the user
-        """
-        self.__first_name = first_name
-
-    def set_last_name(self, last_name: str = ""):
-        """
-        Set a new last name for this user
-        :param last_name: New last name for this user
-        """
-        self.__last_name = last_name
-
-    def set_username(self, username: str = ""):
-        """
-        Set a new username for this user
-        :param username: New username for this user
-        """
-        self.__username = username
