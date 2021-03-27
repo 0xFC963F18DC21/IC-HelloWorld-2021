@@ -17,7 +17,8 @@ class User:
         spotify_access_code: str = ""
     ):
         """
-        Create a new user
+        Create a new user.
+        This assumes that the access code is initially fetched at the same time as the user is created.
         :param first_name: User's first name
         :param last_name: User's last name
         :param username: User's username
@@ -33,6 +34,7 @@ class User:
         self.__username = username
         self.__spotify_refresh_code = spotify_refresh_code
         self.__spotify_access_code = spotify_access_code
+        self.__last_access_fetch = self.__toc
 
         self.__password = pwd_hash(self.__toc + password + self.__user_uuid)
 
@@ -85,6 +87,9 @@ class User:
         BE CAREFUL WITH WHAT USES THIS API.
         :return: User's short-lived spotify access code
         """
+        if time.time() - self.__last_access_fetch > 3600.0:
+            raise RuntimeWarning("The access code is likely invalid!")
+
         return self.__spotify_access_code
 
     def set_spotify_access_code(self, spotify_access_code: str = ""):
@@ -93,3 +98,4 @@ class User:
         :param spotify_access_code:
         """
         self.__spotify_access_code = spotify_access_code
+        self.__last_access_fetch = time.time()
