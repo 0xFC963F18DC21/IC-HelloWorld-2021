@@ -4,7 +4,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from autoslug import
+from autoslug import AutoSlugField
 
 class AppUser(models.Model):
     first_name = models.CharField(max_length=120)
@@ -16,7 +16,7 @@ class AppUser(models.Model):
 class MyUser(models.Model):
     ## User field here is to connect our own model to django's own user model
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    slug = models.SlugField(unique=True, max_length=255)
+    slug = AutoSlugField(populate_from='user')
 
     spotify_auth_token = models.TextField(blank=True, null=True)
     spotify_refresh_token = models.TextField(blank=True, null=True)
@@ -24,10 +24,11 @@ class MyUser(models.Model):
 
     friends = models.ManyToManyField("MyUser", blank=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.user) #slug won't work
-        super(MyUser, self).save(*args, **kwargs)
+    def __str__(self):
+        return str(self.user.username)
+
+    def get_absolute_url(self):
+        return "/users/{}".format(self.slug)
 
 @receiver(post_save, sender=User)
 def create_user_myUser(sender, instance, created, **kwargs):
