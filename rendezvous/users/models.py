@@ -4,7 +4,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from autoslug import
+# from autoslug import AutoSlugField
 
 class AppUser(models.Model):
     first_name = models.CharField(max_length=120)

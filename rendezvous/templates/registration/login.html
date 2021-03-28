@@ -24,9 +24,6 @@
                                 {{ form.password }}
                             </div>
                         </div>
-                        {% if request.GET.next %}
-                        <input type="hidden" name="next" value="{{ request.GET.next }}">
-                        {% endif %}
                         <div class="col-md-6 col-md-offset-4">
                             <input type="submit" value="Login" class="btn btn-success">
                         </div>

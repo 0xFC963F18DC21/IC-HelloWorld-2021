@@ -5,8 +5,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from .models import MyUser, FriendRequest
 from .forms import UserRegisterForm, UserLoginForm
@@ -82,47 +84,47 @@ def profile_view(request, slug):
 
     return render(request, "profile.html", context)
 
+# def register(request):
+#
+#     if request.method == 'POST':
+#         form = UserRegisterForm(request.POST)
+#         if form.is_valid():
+#             if User.objects.filter(username=form.cleaned_data['username']).exists():
+#
+#                 print(User.objects.filter(username=form.cleaned_data['username']))
+#                 return render(request, 'register.html', {
+#                     'form': form,
+#                     'error_message': 'Username already exists.'
+#                 })
+#             else:
+#                 form.save()
+#                 username = form.cleaned_data.get('username')
+#                 messages.success(request, f'Your account has been created! You can now login!')
+#                 return redirect('/login')
+#     else:
+#         form = UserRegisterForm()
+#     return render(request, 'register.html', {'form': form})
 
-def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            if User.objects.filter(username=form.cleaned_data['username']).exists():
 
-                print(User.objects.filter(username=form.cleaned_data['username']))
-                return render(request, 'register.html', {
-                    'form': form,
-                    'error_message': 'Username already exists.'
-                })
-            else:
-                form.save()
-                username = form.cleaned_data.get('username')
-                messages.success(request, f'Your account has been created! You can now login!')
-                return redirect('/login')
-    else:
-        form = UserRegisterForm()
-    return render(request, 'register.html', {'form': form})
-
-
-def login(request):
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            possibleUsers = User.objects.filter(username=username)
-            print([person.password for person in possibleUsers])
-            if len(possibleUsers.filter(password=password)) >= 1:
-                print(request.user)
-                messages.success(request, f'Your account has been logged in to! You can now login!')
-                return redirect(reverse('profile'))
-            return render(request, 'login.html', {
-                'form': form,
-                'error_message': 'Invalid username or password'
-            })
-    else:
-        form = UserLoginForm()
-    return render(request, 'login.html', {'form': form})
+# def login(request):
+#     if request.method == 'POST':
+#         form = UserLoginForm(request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password')
+#             possibleUsers = User.objects.filter(username=username)
+#             print([person.password for person in possibleUsers])
+#             if len(possibleUsers.filter(password=password)) >= 1:
+#                 print(request.user)
+#                 messages.success(request, f'Your account has been logged in to! You can now login!')
+#                 return redirect(reverse_lazy(''))
+#             return render(request, 'login.html', {
+#                 'form': form,
+#                 'error_message': 'Invalid username or password'
+#             })
+#     else:
+#         form = UserLoginForm()
+#     return render(request, 'login.html', {'form': form})
 
 
 @login_required
