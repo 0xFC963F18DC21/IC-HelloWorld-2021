@@ -1,32 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Rendezvous</title>
+{% extends "base.html" %}
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block head %}
+<title>Profile</title>
+{% unblock %}
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body class="override">
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/\">MyDjangoApp</a>
-            </div>
-        </div>
-    </nav>
-
+{% block content %}
     <div class="container">
-        <div class="row">
-            {% block content %}{% endblock %}
-        </div>
+        <h2></h2>
+        <br>
+        <!--  This is where we need the user's personal information    -->
+        <p><b>Username:</b> {{ User.get_username }}</p>
+        <p><b>Name:</b> {{ User.get_first_name }}</p>
+        <p><b>UUID:</b> {{ User.get_user_uuid }}</p>
+
     </div>
-</body>
-</html>
+{% endblock %}

@@ -72,6 +72,7 @@ class User:
         Gets the username of the user
         :return: User's username
         """
+        return self.__username
 
     def get_spotify_refresh_code(self) -> str:
         """
