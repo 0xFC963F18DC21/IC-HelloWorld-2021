@@ -85,14 +85,21 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
+            if User.objects.filter(username=form.cleaned_data['username']).exists():
 
-            messages.success(request, f'Your account has been created! You can now login!')
-            return redirect('login')
+                print(User.objects.filter(username=form.cleaned_data['username']))
+                return render(request, 'register.html', {
+                    'form': form,
+                    'error_message': 'Username already exists.'
+                })
+            else:
+                form.save()
+                username = form.cleaned_data.get('username')
+                messages.success(request, f'Your account has been created! You can now login!')
+                return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 
 def login(request):
@@ -101,14 +108,18 @@ def login(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            possibleUsers = MyUser.objects.filter(username=username)
+            possibleUsers = User.objects.filter(username=username)
+            print([person.password for person in possibleUsers])
             if len(possibleUsers.filter(password=password)) >= 1:
                 messages.success(request, f'Your account has been logged in to! You can now login!')
-                return redirect('profile_view')
-            return redirect(request, 'users/login.html', {'form': form})
+                return redirect('profile')
+            return render(request, 'login.html', {
+                'form': form,
+                'error_message': 'Invalid username or password'
+            })
     else:
         form = UserLoginForm()
-    return render(request, 'users/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 
 @login_required

@@ -4,22 +4,22 @@ from django.template.defaultfilters import slugify
 
 
 class AppUser(models.Model):
-    first_name = models.TextField()
-    last_name = models.TextField()
-    username = models.TextField()
+    first_name = models.CharField(max_length=120)
+    last_name = models.CharField(max_length=120)
+    username = models.CharField(max_length=120)
     spotify_access_token = models.TextField(blank=True, null=True)
 
 
 class MyUser(models.Model):
-    first_name = models.TextField()
-    last_name = models.TextField()
-    username = models.TextField()
+    first_name = models.CharField(max_length=120)
+    last_name = models.CharField(max_length=120)
+    username = models.CharField(max_length=120)
     slug = models.SlugField(unique=True, max_length=255)
 
     spotify_auth_token = models.TextField(blank=True, null=True)
     spotify_refresh_token = models.TextField(blank=True, null=True)
     spotify_access_token = models.TextField(blank=True, null=True)
-    password = models.TextField()  # Don't forget to add salt
+    password = models.CharField(max_length=120)  # Don't forget to add salt
 
     friends = models.ManyToManyField("MyUser", blank=True)
 
