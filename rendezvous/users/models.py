@@ -10,25 +10,23 @@ class AppUser(models.Model):
     spotify_access_token = models.TextField(blank=True, null=True)
 
 
-class User(models.Model):
+class MyUser(models.Model):
     first_name = models.TextField()
     last_name = models.TextField()
     username = models.TextField()
     slug = models.SlugField(unique=True, max_length=255)
 
     spotify_auth_token = models.TextField(blank=True, null=True)
-    spotify_refresh_token = models.TextField()
+    spotify_refresh_token = models.TextField(blank=True, null=True)
     spotify_access_token = models.TextField(blank=True, null=True)
+    password = models.TextField()  # Don't forget to add salt
 
-    time_of_creation = models.DateTimeField()
-    password_hash = models.TextField()  # Don't forget to add salt
-
-    friends = models.ManyToManyField("User", blank=True)
+    friends = models.ManyToManyField("MyUser", blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
-        super(User, self).save(*args, **kwargs)
+            self.slug = slugify(self.username)
+        super(MyUser, self).save(*args, **kwargs)
 
 
 class FriendRequest(models.Model):

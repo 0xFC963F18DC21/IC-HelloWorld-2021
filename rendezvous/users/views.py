@@ -6,11 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from .models import User, FriendRequest
-from .forms import UserRegisterForm
+from .models import MyUser, FriendRequest
+from .forms import UserRegisterForm, UserLoginForm
 import random
 
-User = User
+User = MyUser
 
 
 def friend_list(request):
@@ -24,7 +24,7 @@ def friend_list(request):
 
 @login_required
 def send_friend_request(request, searchId):
-    user = get_object_or_404(User, id=searchId)
+    user = get_object_or_404(MyUser, id=searchId)
     frequest, created = FriendRequest.objects.get_or_create(
         from_user=request.user,
         to_user=user)
@@ -33,7 +33,7 @@ def send_friend_request(request, searchId):
 
 @login_required
 def accept_friend_request(request, searchId):
-    from_user = get_object_or_404(User, id=searchId)
+    from_user = get_object_or_404(MyUser, id=searchId)
     frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
     user1 = frequest.to_user
     user2 = from_user
@@ -48,7 +48,7 @@ def accept_friend_request(request, searchId):
 
 @login_required
 def profile_view(request, slug):
-    p = User.objects.filter(slug=slug).first()
+    p = MyUser.objects.filter(slug=slug).first()
     u = p
     sent_friend_requests = FriendRequest.objects.filter(from_user=p.user)
     rec_friend_requests = FriendRequest.objects.filter(to_user=p.user)
@@ -78,7 +78,7 @@ def profile_view(request, slug):
         'rec_friend_requests': rec_friend_requests,
     }
 
-    return render(request, "users/profile.html", context)
+    return render(request, "users/user.html", context)
 
 
 def register(request):
@@ -87,11 +87,28 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+
             messages.success(request, f'Your account has been created! You can now login!')
             return redirect('login')
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+def login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            possibleUsers = MyUser.objects.filter(username=username)
+            if len(possibleUsers.filter(password=password)) >= 1:
+                messages.success(request, f'Your account has been logged in to! You can now login!')
+                return redirect('profile_view')
+            return redirect(request, 'users/login.html', {'form': form})
+    else:
+        form = UserLoginForm()
+    return render(request, 'users/login.html', {'form': form})
 
 
 @login_required
@@ -130,7 +147,7 @@ def my_profile(request):
 @login_required
 def search_users(request):
     query = request.GET.get('q')
-    object_list = User.objects.filter(username__icontains=query)
+    object_list = MyUser.objects.filter(username__icontains=query)
     context = {
         'users': object_list
     }
