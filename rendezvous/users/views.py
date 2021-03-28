@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 from .models import MyUser, FriendRequest
 from .forms import UserRegisterForm, UserLoginForm
 import random
@@ -78,7 +80,7 @@ def profile_view(request, slug):
         'rec_friend_requests': rec_friend_requests,
     }
 
-    return render(request, "users/user.html", context)
+    return render(request, "profile.html", context)
 
 
 def register(request):
@@ -96,7 +98,7 @@ def register(request):
                 form.save()
                 username = form.cleaned_data.get('username')
                 messages.success(request, f'Your account has been created! You can now login!')
-                return redirect('login')
+                return redirect('/login')
     else:
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
@@ -111,8 +113,9 @@ def login(request):
             possibleUsers = User.objects.filter(username=username)
             print([person.password for person in possibleUsers])
             if len(possibleUsers.filter(password=password)) >= 1:
+                print(request.user)
                 messages.success(request, f'Your account has been logged in to! You can now login!')
-                return redirect('profile')
+                return redirect(reverse('profile'))
             return render(request, 'login.html', {
                 'form': form,
                 'error_message': 'Invalid username or password'
@@ -125,19 +128,20 @@ def login(request):
 @login_required
 def my_profile(request):
     p = request.user
-    you = p
+    myUserP = MyUser.objects.filter(user=p)
+    you = myUserP
     sent_friend_requests = FriendRequest.objects.filter(from_user=you)
     rec_friend_requests = FriendRequest.objects.filter(to_user=you)
-    friends = p.friends.all()
+    friends = myUserP.objects.all()
 
     # is this user our friend
     button_status = 'none'
-    if p not in request.user.friends.all():
+    if myUserP not in myUserP.objects.all():
         button_status = 'not_friend'
 
         # if we have sent him a friend request
         if len(FriendRequest.objects.filter(
-                from_user=request.user).filter(to_user=you)) == 1:
+                from_user=myUserP).filter(to_user=you)) == 1:
             button_status = 'friend_request_sent'
 
         if len(FriendRequest.objects.filter(
@@ -152,7 +156,7 @@ def my_profile(request):
         'rec_friend_requests': rec_friend_requests,
     }
 
-    return render(request, "users/profile.html", context)
+    return render(request, "profile.html", context)
 
 
 @login_required
