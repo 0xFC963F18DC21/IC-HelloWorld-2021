@@ -15,21 +15,17 @@ class AppUser(models.Model):
 class MyUser(models.Model):
     ## User field here is to connect our own model to django's own user model
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=120)
-    last_name = models.CharField(max_length=120)
-    username = models.CharField(max_length=120)
     slug = models.SlugField(unique=True, max_length=255)
 
     spotify_auth_token = models.TextField(blank=True, null=True)
     spotify_refresh_token = models.TextField(blank=True, null=True)
     spotify_access_token = models.TextField(blank=True, null=True)
-    password = models.CharField(max_length=120)  # Don't forget to add salt
 
     friends = models.ManyToManyField("MyUser", blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.username)
+            self.slug = slugify(self.user) #slug won't work
         super(MyUser, self).save(*args, **kwargs)
 
 @receiver(post_save, sender=User)
