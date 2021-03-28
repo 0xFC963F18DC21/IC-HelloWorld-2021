@@ -1,0 +1,259 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<style>
+    body {
+        background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    }
+    img {
+        max-height: 200px;
+        max-width: 200px;
+    }
+.emp-profile{
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 70%;
+    height: 100%;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.profile-head h5{
+    color: #333;
+}
+.profile-head h6{
+    color: #0062cc;
+}
+.profile-edit-btn{
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+}
+.proile-rating{
+    font-size: 12px;
+    color: #818182;
+    margin-top: 5%;
+}
+.proile-rating span{
+    color: #495057;
+    font-size: 15px;
+    font-weight: 600;
+}
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #0062cc;
+}
+.profile-work{
+    padding: 14%;
+    margin-top: -15%;
+}
+.profile-work p{
+    font-size: 12px;
+    color: #818182;
+    font-weight: 600;
+    margin-top: 10%;
+}
+.profile-work a{
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+}
+.profile-work ul{
+    list-style: none;
+}
+.profile-tab label{
+    font-weight: 600;
+}
+.profile-tab p{
+    font-weight: 600;
+    color: #0062cc;
+}
+.accept {
+    color:green;
+    border-radius: 0.25em;
+    border-color: green;
+    border-style: solid;
+    border-width: 0.1em;
+    margin-top: 0.25em;
+    padding: 0 0.25em 0 0.25em;
+}
+.ignore {
+    border-radius: 0.25em;
+    border-color: red;
+    border-width: 0.1em;
+    margin-top: 0.25em;
+    padding: 0 0.25em 0 0.25em;
+    border-style:solid;
+    color:red;
+}
+.friend-thing {
+    border-width: 0.3em;
+    border-color: lightgray;
+    border-style: solid;
+    border-radius: 0.5em;
+
+}
+</style>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="https://youimg1.tripcdn.com/target/100q1f000001grijk71EA_C_750_500.jpg?proc=source%2Ftrip" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        Siddhant Singh
+                                    </h5>
+                                    <h6>
+                                        Avid music listener :)
+                                    </h6>
+                                    <p class="proile-rating">Favourite genre : <span>French House</span></p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="friends-tab" data-toggle="tab" href="friends_list.html" role="tab" aria-controls="profile" aria-selected="false">Friends</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="activity-tab" data-toggle="tab" href="activity.html" role="tab" aria-controls="profile" aria-selected="false">Activity</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="request-tab" data-toggle="tab" href="requests.html" role="tab" aria-controls="profile" aria-selected="true">Friend Requests</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <p>Socials</p>
+                            <a href="">Instagram</a><br/>
+                            <a href="">Spotify</a><br/>
+                            <a href="">Twitter</a>
+                            <a href="">LinkedIn</a>
+                            <p>Spotify Playlists</p>
+                            <a href="">Study Music</a><br/>
+                            <a href="">summer'21</a><br/>
+                            <a href="">sad boi hours</a><br/>
+                            <a href="">hype</a><br/>
+                            <a href="">gym</a><br/>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>You have 5 requests</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row d-flex flex-column align-items-center">
+                                        <label>Robbie</label>
+                                        <label>RV score: 66%</label>
+                                        <img class="col-md-4" src="https://media.discordapp.net/attachments/815377707708973086/825686715712536606/robbie_2.jpg" alt=""/>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <label class="accept">Accept</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="ignore">Ignore</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex flex-column align-items-center">
+                                        <label>Bobbie</label>
+                                        <label>RV score: 90%</label>
+                                        <img class="col-md-4" src="https://cdn.discordapp.com/attachments/544862537859203082/825692395546738698/unknown.png" alt=""/>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <label class="accept">Accept</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="ignore">Ignore</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row d-flex flex-column align-items-center">
+                                        <label>Mobbie</label>
+                                        <label>RV score: 69%</label>
+                                        <img class="col-md-4" src="data:image/jpeg;base64,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" alt=""/>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <label class="accept">Accept</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="ignore">Ignore</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex flex-column align-items-center">
+                                        <label>Pobbie</label>
+                                        <label>RV score: 77%</label>
+                                        <img class="col-md-4" src="https://storage.googleapis.com/eezee-product-images/orex-hammer-claw-steel-tubular-handle-bjpm_600.jpg" alt=""/>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <label class="accept">Accept</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="ignore">Ignore</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+</div>
