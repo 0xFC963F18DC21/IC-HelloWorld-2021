@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from autoslug import AutoSlugField
 
+
 class AppUser(models.Model):
     first_name = models.CharField(max_length=120)
     last_name = models.CharField(max_length=120)
@@ -14,7 +15,7 @@ class AppUser(models.Model):
 
 
 class MyUser(models.Model):
-    ## User field here is to connect our own model to django's own user model
+    # User field here is to connect our own model to django's own user model
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = AutoSlugField(populate_from='user')
 
@@ -30,10 +31,12 @@ class MyUser(models.Model):
     def get_absolute_url(self):
         return "/users/{}".format(self.slug)
 
+
 @receiver(post_save, sender=User)
 def create_user_myUser(sender, instance, created, **kwargs):
     if created:
         MyUser.objects.create(user=instance)
+
 
 class FriendRequest(models.Model):
     to_user = models.ForeignKey(MyUser, related_name='to_user', on_delete=models.CASCADE)
