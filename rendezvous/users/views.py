@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 
 from .models import MyUser, FriendRequest
@@ -66,12 +66,12 @@ def profile_view(request, slug):
 
         # if we have sent him a friend request
         if len(FriendRequest.objects.filter(
-                from_user=request.user).filter(to_user=p.user)) == 1:
+            from_user=request.user).filter(to_user=p.user)) == 1:
             button_status = 'friend_request_sent'
 
         # if we have recieved a friend request
         if len(FriendRequest.objects.filter(
-                from_user=p.user).filter(to_user=request.user)) == 1:
+            from_user=p.user).filter(to_user=request.user)) == 1:
             button_status = 'friend_request_received'
 
     context = {
@@ -83,6 +83,7 @@ def profile_view(request, slug):
     }
 
     return render(request, "profile.html", context)
+
 
 def register(request):
     if request.method == 'POST':
@@ -142,11 +143,11 @@ def my_profile(request):
 
         # if we have sent him a friend request
         if len(FriendRequest.objects.filter(
-                from_user=myUserP).filter(to_user=you)) == 1:
+            from_user=myUserP).filter(to_user=you)) == 1:
             button_status = 'friend_request_sent'
 
         if len(FriendRequest.objects.filter(
-                from_user=p.user).filter(to_user=request.user)) == 1:
+            from_user=p.user).filter(to_user=request.user)) == 1:
             button_status = 'friend_request_received'
 
     context = {
