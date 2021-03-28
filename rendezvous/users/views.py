@@ -132,7 +132,7 @@ def my_profile(request):
     you = myUserP
     sent_friend_requests = FriendRequest.objects.filter(from_user=you)
     rec_friend_requests = FriendRequest.objects.filter(to_user=you)
-    friends = myUserP.friends()
+    friends = myUserP.friends
 
     # is this user our friend
     button_status = 'none'

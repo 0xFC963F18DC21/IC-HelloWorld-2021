@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'api',
     'users',
     'pages',
+    'accounts',
 ]
 
 MIDDLEWARE = [
